@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery with Slideshow</title>
+    <style>
+        body {
+            margin: 20px;
+            padding: 10px;
+            font-family: Arial, sans-serif;
+            background-color: #1b1b2f;
+            color: white;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 20px 0;
+        }
+
+        /* Slideshow */
+        .slideshow-container {
+            position: relative;
+            max-width: 500px; /* Match gallery width */ 
+            margin: 20px auto;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .slide {
+            display: none;
+        }
+
+        .slide img {
+            width: 100%;
+            border-radius: 15px;
+        }
+
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: auto;
+            padding: 10px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        .dot-container {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 5px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.5s ease;
+        }
+
+        .dot.active {
+            background-color: #ff5733;
+        }
+
+        /* Gallery */
+        .bl {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #283048;
+            border-radius: 40px;
+            padding: 20px;
+            max-width:50%; 
+            max-height: 50%;
+            margin: 15px auto;
+        }
+
+        .gallery {
+            column-count: 3;
+            column-gap: 10px;
+            width: 100%; 
+            padding: 10px;
+        }
+
+        .gallery img {
+            padding: 5px;
+            width: 100%;
+            display: block;
+            margin: 1px 1px 1px 1px;
+            border-radius: 15%;
+            break-inside: avoid;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.15);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <h1>Image Gallery with Slideshow</h1>
+
+    <div class="slideshow-container"> 
+        <div class="slide">
+            <img src="pcj1.jpg" alt="Slideshow Image 1">
+        </div>
+        <div class="slide">
+            <img src="pcj2.jpg" alt="Slideshow Image 2">
+        </div>
+        <div class="slide">
+            <img src="pcj3.jpg" alt="Slideshow Image 3">
+        </div>
+        <div class="slide">
+            <img src="pcj4.jpg" alt="Slideshow Image 4">
+        </div>
+        <div class="slide">
+            <img src="pcj5.jpg" alt="Slideshow Image 5">
+        </div>
+        <div class="slide">
+            <img src="pcj6.png" alt="Slideshow Image 6">
+        </div> 
+
+        <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+        <a class="next" onclick="changeSlide(1)">&#10095;</a>
+    </div>
+
+    <div class="dot-container">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+        <span class="dot" onclick="currentSlide(5)"></span>
+        <span class="dot" onclick="currentSlide(6)"></span>
+    </div>
+
+    <div class="bl">
+        <div class="gallery">
+            <img src="pcj1.jpg" alt="Image 1">
+            <img src="pcj2.jpg" alt="Image 2">
+            <img src="pcj3.jpg" alt="Image 3">
+            <img src="pcj5.jpg" alt="Image 5">
+            <img src="pcj6.png" alt="Image 6">
+            <img src="ph.png" alt="Image 7">
+            <img src="pcj1.0.jpg" alt="Image 8">
+            <img src="pcj12.png" alt="Image 9">
+            <img src="pcj22.jpg" alt="Image 10">
+          
+           
+          
+        </div>
+    </div>
+
+    <script>
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        function changeSlide(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            let slides = document.getElementsByClassName("slide");
+            let dots = document.getElementsByClassName("dot");
+
+            if (n > slides.length) slideIndex = 1;
+            if (n < 1) slideIndex = slides.length;
+
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+        }
+
+        // Auto-slide
+        setInterval(() => changeSlide(1), 5000);
+    </script>
+</body>
+</html>
