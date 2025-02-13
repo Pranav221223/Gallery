@@ -21,7 +21,7 @@
         /* Slideshow */
         .slideshow-container {
             position: relative;
-            max-width: 500px; /* Match gallery width */ 
+            max-width: 500px;
             margin: 20px auto;
             overflow: hidden;
             border-radius: 15px;
@@ -35,6 +35,7 @@
         .slide img {
             width: 100%;
             border-radius: 15px;
+            display: block; /* Prevents small space below image */
         }
 
         .prev, .next {
@@ -47,6 +48,7 @@
             color: white;
             background-color: rgba(0, 0, 0, 0.5);
             border-radius: 5px;
+            z-index: 1; /* Ensure arrows are above the image */
         }
 
         .prev {
@@ -79,37 +81,50 @@
 
         /* Gallery */
         .bl {
-            display: flex;
-            justify-content: center;
-            align-items: center;
             background-color: #283048;
             border-radius: 40px;
             padding: 20px;
-            max-width:50%; 
-            max-height: 50%;
             margin: 15px auto;
+            width: 90%; /* Occupy most of the container width on all devices */
+            max-width: 900px; /* Set a maximum width for larger screens */
+            box-sizing: border-box; /* Include padding in width calculation */
         }
 
         .gallery {
-            column-count: 3;
-            column-gap: 10px;
-            width: 100%; 
-            padding: 10px;
+            display: flex; /* Use flexbox for layout */
+            flex-wrap: wrap; /* Allow images to wrap to the next line */
+            justify-content: center; /* Center images horizontally */
+            gap: 10px; /* Space between images */
         }
 
         .gallery img {
-            padding: 5px;
-            width: 100%;
-            display: block;
-            margin: 1px 1px 1px 1px;
+            width: calc(33.33% - 10px); /* 3 images per row with spacing */
+            max-width: 280px; /* Set a maximum width for the images */
+            height: auto; /* Maintain aspect ratio */
             border-radius: 15%;
-            break-inside: avoid;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-sizing: border-box; /* Include padding and border in width calculation */
+            object-fit: cover; /* or contain, depending on how you want the image to fit */
         }
 
         .gallery img:hover {
-            transform: scale(1.15);
+            transform: scale(1.05); /* Slightly less scaling on hover */
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {  /* Adjust breakpoint as needed */
+            .gallery img {
+                width: calc(50% - 10px); /* 2 images per row on smaller screens */
+            }
+
+            .bl {
+                width: 95%; /* Take up more of the screen width */
+            }
+
+            .slideshow-container {
+                max-width: 90%; /* Make slideshow responsive too */
+            }
         }
     </style>
 </head>
@@ -166,39 +181,6 @@
         </div>
     </div>
 
-    <script>
-        let slideIndex = 1;
-        showSlides(slideIndex);
-
-        function changeSlide(n) {
-            showSlides(slideIndex += n);
-        }
-
-        function currentSlide(n) {
-            showSlides(slideIndex = n);
-        }
-
-        function showSlides(n) {
-            let slides = document.getElementsByClassName("slide");
-            let dots = document.getElementsByClassName("dot");
-
-            if (n > slides.length) slideIndex = 1;
-            if (n < 1) slideIndex = slides.length;
-
-            for (let i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
-            }
-
-            for (let i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
-            }
-
-            slides[slideIndex - 1].style.display = "block";
-            dots[slideIndex - 1].className += " active";
-        }
-
-        // Auto-slide
-        setInterval(() => changeSlide(1), 5000);
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
